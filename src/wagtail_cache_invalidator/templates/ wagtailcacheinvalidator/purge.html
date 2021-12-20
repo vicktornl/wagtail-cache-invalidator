@@ -1,0 +1,44 @@
+{% extends "wagtailadmin/base.html" %}
+
+{% load i18n wagtailadmin_tags %}
+
+{% block titletag %}{% trans "Purge cache" %}{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title="Purge cache" icon="bin" %}
+    <div class="nice-padding">
+        <div class="help-block help-info">
+            {% blocktrans %}
+                <p>Please select the site(s) below you want to purge cache for.</p>
+                <p>
+                    The urls (e.g. <code>/*</code> a wildcard for all pages) can be either a single url or a batch of multiple urls separated by a newline.
+                </p>
+                <p>
+                    See: <a href="https://docs.wagtail.io/en/stable/reference/contrib/frontendcache.html" target="_blank" rel="noreferrer noopener">https://docs.wagtail.io/en/stable/reference/contrib/frontendcache.html</a>
+                </p>
+            {% endblocktrans %}
+        </div>
+        {% include "wagtailadmin/shared/non_field_errors.html" %}
+        <form action="{% url 'wagtailcacheinvalidator:purge' %}" method="POST" novalidate>
+            {% csrf_token %}
+            <ul class="fields">
+                {% for field in form %}
+                    {% include "wagtailadmin/shared/field_as_li.html" %}
+                {% endfor %}
+                <li><input type="submit" value="{% trans 'Purge' %}" class="button" /></li>
+            </ul>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    {% include "wagtailadmin/pages/_editor_css.html" %}
+    {{ form_media.css }}
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    {% include "wagtailadmin/pages/_editor_js.html" %}
+    {{ form_media.js }}
+{% endblock %}

@@ -1,0 +1,3 @@
+# Wagtail Cache Invalidator
+
+## Settings
