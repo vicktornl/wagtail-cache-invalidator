@@ -4,6 +4,8 @@
 
 Invalidate and purge (frontend) cache via an user-friendly interface in the Wagtail CMS.
 
+![Purge](./docs/purge.jpg)
+
 ## Requirements
 
 - Python 3
