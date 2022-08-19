@@ -6,6 +6,12 @@ Invalidate and purge (frontend) cache via an user-friendly interface in the Wagt
 
 ![Purge](./docs/purge.jpg)
 
+## Features
+
+- Invalidate cache manually via the Wagtail CMS
+- Site settings driven frontend cache settings (no code/deployments needed in order to change your settings)
+- Purge all cache (use with caution)
+
 ## Requirements
 
 - Python 3
