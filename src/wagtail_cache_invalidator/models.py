@@ -12,10 +12,24 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
 )
 from wagtail.contrib.settings.models import BaseSetting, register_setting
+from wagtail.core.models import Site
 
 from wagtail_cache_invalidator.utils import purge_urls_from_cache
 
 PURGE_ALL_HELP_TXT = _("Purge all cache for this site when pages are (un)published")
+
+
+class PurgeCacheSite(Site):
+    class Meta:
+        proxy = True
+
+    def __str__(self):
+        result = self.hostname
+        if self.port not in [80, 443]:
+            result += ":{}".format(self.port)
+        if self.is_default_site:
+            result += " [{}]".format(_("default"))
+        return result
 
 
 @register_setting
