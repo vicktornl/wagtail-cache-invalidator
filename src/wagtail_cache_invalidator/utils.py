@@ -6,18 +6,24 @@ from wagtail.contrib.frontend_cache.utils import (
 )
 
 
-def purge_urls_from_cache(site, urls):
+def purge_urls_from_cache(site_id, urls):
+    from wagtail.models import Site
+
     from wagtail_cache_invalidator.models import CacheSettings
 
+    site = Site.objects.get(id=site_id)
     cache_settings = CacheSettings.for_site(site)
     backend_settings = cache_settings.backend_settings
 
     wagtail_purge_urls_from_cache(urls, backend_settings=backend_settings)
 
 
-def purge_page_from_cache(page):
+def purge_page_from_cache(page_id):
+    from wagtail.models import Page
+
     from wagtail_cache_invalidator.models import CacheSettings
 
+    page = Page.objects.get(id=page_id)
     site = page.get_site()
     cache_settings = CacheSettings.for_site(site)
     backend_settings = cache_settings.backend_settings

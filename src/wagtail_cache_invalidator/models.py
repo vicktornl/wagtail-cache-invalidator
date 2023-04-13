@@ -14,6 +14,8 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.models import Site
 
+from wagtail_cache_invalidator import signals
+from wagtail_cache_invalidator.settings import ASYNC
 from wagtail_cache_invalidator.utils import purge_urls_from_cache
 
 PURGE_ALL_HELP_TXT = _("Purge all cache for this site when pages are (un)published")
@@ -111,4 +113,9 @@ def handle_invalidation_request(
             for path in instance.urls.splitlines():
                 url = root_url + path
                 urls.append(url)
-            purge_urls_from_cache(site, urls)
+            if ASYNC:
+                signals.purge_urls_from_cache.send(
+                    sender=sender, site_id=site.id, urls=urls
+                )
+            else:
+                purge_urls_from_cache(site.id, urls)
