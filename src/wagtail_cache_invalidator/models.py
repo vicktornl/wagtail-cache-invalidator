@@ -5,14 +5,14 @@ from django.db import models
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     MultiFieldPanel,
     ObjectList,
     TabbedInterface,
 )
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from wagtail_cache_invalidator import signals
 from wagtail_cache_invalidator.settings import ASYNC

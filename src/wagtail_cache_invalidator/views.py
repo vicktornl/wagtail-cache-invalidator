@@ -4,7 +4,7 @@ from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from wagtail.admin.auth import permission_required
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from wagtail_cache_invalidator.forms import PurgeForm
 from wagtail_cache_invalidator.models import InvalidationRequest

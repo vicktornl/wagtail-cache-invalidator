@@ -1,5 +1,5 @@
 from django.apps import apps
-from wagtail.core.signals import page_published, page_unpublished
+from wagtail.signals import page_published, page_unpublished
 
 from wagtail_cache_invalidator import signals
 from wagtail_cache_invalidator.settings import ASYNC
