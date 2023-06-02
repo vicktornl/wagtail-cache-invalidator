@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-install_requires = ["django>=3", "wagtail>=2"]
+install_requires = ["django>=4", "wagtail>=5"]
 
 test_require = [
     "black",
@@ -15,7 +15,7 @@ docs_require = []
 
 setup(
     name="wagtail-cache-invalidator",
-    version="0.5.0",
+    version="0.6.0",
     description="",
     author="R.Moorman <rob@vicktor.nl>",
     install_requires=install_requires,
