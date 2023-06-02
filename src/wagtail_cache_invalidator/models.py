@@ -11,7 +11,7 @@ from wagtail.admin.panels import (
     ObjectList,
     TabbedInterface,
 )
-from wagtail.contrib.settings.models import BaseSetting, register_setting
+from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.models import Site
 
 from wagtail_cache_invalidator import signals
@@ -35,7 +35,7 @@ class PurgeCacheSite(Site):
 
 
 @register_setting
-class CacheSettings(BaseSetting):
+class CacheSettings(BaseSiteSetting):
     purge_all = models.BooleanField(
         verbose_name=_("purge all"), default=False, help_text=PURGE_ALL_HELP_TXT
     )

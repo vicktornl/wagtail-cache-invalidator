@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Permission
 from django.urls import include, path, reverse
 from django.utils.translation import gettext_lazy as _
+from wagtail import hooks
 from wagtail.admin.menu import Menu, MenuItem, SubmenuMenuItem
 from wagtail.contrib.modeladmin.helpers.permission import PermissionHelper
 from wagtail.contrib.modeladmin.options import (
@@ -8,7 +9,6 @@ from wagtail.contrib.modeladmin.options import (
     ModelAdminGroup,
     modeladmin_register,
 )
-from wagtail import hooks
 
 from wagtail_cache_invalidator.models import InvalidationRequest
 
