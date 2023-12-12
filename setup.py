@@ -15,7 +15,7 @@ docs_require = []
 
 setup(
     name="wagtail-cache-invalidator",
-    version="0.6.1",
+    version="0.6.2",
     description="",
     author="R.Moorman <rob@vicktor.nl>",
     install_requires=install_requires,
