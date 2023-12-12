@@ -31,6 +31,9 @@ def purge_page_from_cache(page_id):
     page = Page.objects.get(id=page_id)
     site = page.get_site()
 
+    if not site:
+        return
+
     try:
         cache_settings = CacheSettings.for_site(site)
     except CacheSettings.DoesNotExist:
