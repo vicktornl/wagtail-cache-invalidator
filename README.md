@@ -17,6 +17,7 @@ Invalidate and purge (frontend) cache via an user-friendly interface in the Wagt
 - Python 3
 - Django >= 2
 - Wagtail >= 3
+- wagtail-modeladmin==2.0.0
 - [Frontend cache invalidator](https://docs.wagtail.io/en/stable/reference/contrib/frontendcache.html)
 
 ## Installation

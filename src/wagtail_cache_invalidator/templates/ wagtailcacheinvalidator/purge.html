@@ -27,7 +27,9 @@
                     {% csrf_token %}
                     <ul class="fields">
                         {% for field in form %}
-                            {% include "wagtailadmin/shared/field_as_li.html" %}
+                        <li>
+                            {% include "wagtailadmin/shared/field.html" %}
+                        </li>
                         {% endfor %}
                         <li><input type="submit" value="{% trans 'Purge' %}" class="button" /></li>
                     </ul>
