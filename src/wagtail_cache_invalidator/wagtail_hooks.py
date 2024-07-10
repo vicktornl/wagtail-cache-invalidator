@@ -3,12 +3,8 @@ from django.urls import include, path, reverse
 from django.utils.translation import gettext_lazy as _
 from wagtail import hooks
 from wagtail.admin.menu import Menu, MenuItem, SubmenuMenuItem
-from wagtail.contrib.modeladmin.helpers.permission import PermissionHelper
-from wagtail.contrib.modeladmin.options import (
-    ModelAdmin,
-    ModelAdminGroup,
-    modeladmin_register,
-)
+from wagtail_modeladmin.helpers.permission import PermissionHelper
+from wagtail_modeladmin.options import ModelAdmin, ModelAdminGroup, modeladmin_register
 
 from wagtail_cache_invalidator.models import InvalidationRequest
 
