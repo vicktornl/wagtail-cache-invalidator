@@ -93,13 +93,18 @@ class InvalidationRequest(models.Model):
         blank=False,
     )
     date_requested = models.DateTimeField(verbose_name=_("Date requested"))
-    sites = models.ManyToManyField("wagtailcore.Site", verbose_name=_("Sites"))
+    sites = models.ManyToManyField(Site, verbose_name=_("Sites"))
     urls = models.TextField(verbose_name=_("Urls"))
 
     class Meta:
         ordering = ["-date_requested"]
         verbose_name = _("Invalidation request")
         verbose_name_plural = _("Invalidation requests")
+
+    def display_sites(self):
+        return ", ".join([site.hostname for site in self.sites.all()])
+
+    display_sites.short_description = _("Sites")
 
 
 @receiver(m2m_changed, sender=InvalidationRequest.sites.through)

@@ -3,8 +3,9 @@ from django.urls import include, path, reverse
 from django.utils.translation import gettext_lazy as _
 from wagtail import hooks
 from wagtail.admin.menu import Menu, MenuItem, SubmenuMenuItem
-from wagtail_modeladmin.helpers.permission import PermissionHelper
-from wagtail_modeladmin.options import ModelAdmin, ModelAdminGroup, modeladmin_register
+from wagtail.permission_policies import ModelPermissionPolicy
+from wagtail.snippets.models import register_snippet
+from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
 
 from wagtail_cache_invalidator.models import InvalidationRequest
 
@@ -35,7 +36,13 @@ class CacheMenuItem(MenuItem):
         return request.user.has_perm("wagtailcacheinvalidator.add_invalidationrequest")
 
 
-class InvalidationRequestPermissionHelper(PermissionHelper):
+class InvalidationRequestPermissionPolicy(ModelPermissionPolicy):
+    def __init__(self):
+        super().__init__(InvalidationRequest)
+
+    def user_can_list(self, user):
+        return user.has_perm("wagtailcacheinvalidator.add_invalidationrequest")
+
     def user_can_create(self, user):
         return False
 
@@ -46,32 +53,29 @@ class InvalidationRequestPermissionHelper(PermissionHelper):
         return True
 
 
-class InvalidationRequestModelAdmin(ModelAdmin):
+class InvalidationRequestSnippetViewSet(SnippetViewSet):
     model = InvalidationRequest
     menu_label = _("Invalidation requests")
-    menu_icon = "list-ul"
+    icon = "list-ul"
     menu_order = 0
     list_display = ["requested_by", "date_requested", "display_sites", "urls"]
     list_filter = ["date_requested", "sites"]
-    permission_helper_class = InvalidationRequestPermissionHelper
+    add_to_admin_menu = False
+    permission_policy = InvalidationRequestPermissionPolicy()
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        qs.select_related("requested_by")
-        qs.select_related("sites")
+        if qs is not None:
+            qs = qs.select_related("requested_by")
+            qs = qs.select_related("sites")
         return qs
 
-    def display_sites(self, obj):
-        return ", ".join([site.hostname for site in obj.sites.all()])
 
-    display_sites.short_description = _("Sites")
-
-
-class CacheModelAdminGroup(ModelAdminGroup):
+class CacheSnippetViewSetGroup(SnippetViewSetGroup):
     menu_label = _("Cache")
-    menu_icon = "view"
+    icon = "view"
     menu_order = 10000
-    items = [InvalidationRequestModelAdmin]
+    items = [InvalidationRequestSnippetViewSet]
 
     def get_submenu_items(self):
         items = super().get_submenu_items()
@@ -79,11 +83,11 @@ class CacheModelAdminGroup(ModelAdminGroup):
             CacheMenuItem(
                 _("Purge"),
                 reverse("wagtailcacheinvalidator:purge"),
-                classnames="icon icon-bin",
+                icon_name="bin",
                 order=1,
             )
         )
         return items
 
 
-modeladmin_register(CacheModelAdminGroup)
+register_snippet(CacheSnippetViewSetGroup)

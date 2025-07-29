@@ -30,7 +30,7 @@ def pytest_configure():
             "django.contrib.staticfiles",
             "wagtail_cache_invalidator",
         ],
-        MIDDLEWARE_CLASSES=[
+        MIDDLEWARE=[
             "django.middleware.security.SecurityMiddleware",
             "django.contrib.sessions.middleware.SessionMiddleware",
             "django.middleware.common.CommonMiddleware",

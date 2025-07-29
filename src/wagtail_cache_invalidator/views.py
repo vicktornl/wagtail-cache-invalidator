@@ -18,10 +18,10 @@ def purge(request):
         form = PurgeForm(request.POST)
         if form.is_valid():
             from wagtail_cache_invalidator.wagtail_hooks import (
-                InvalidationRequestModelAdmin,
+                InvalidationRequestSnippetViewSet,
             )
 
-            url_helper = InvalidationRequestModelAdmin().url_helper
+            url_helper = InvalidationRequestSnippetViewSet().url_helper
 
             obj = InvalidationRequest(
                 urls=form.cleaned_data.get("urls"),

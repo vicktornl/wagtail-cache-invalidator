@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import fields
 
 from wagtail_cache_invalidator.models import InvalidationRequest, PurgeCacheSite
 
